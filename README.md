@@ -153,7 +153,6 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 sudo reboot 
 
-# After reboot
 docker run hello-world
 
  ```
