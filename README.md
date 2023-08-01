@@ -130,10 +130,10 @@ Below is the screenshot showing sucessful launch:
 
 
  <details>
- <summary> magic </summary>
+ <summary> OpenLane </summary>
 
 
- I installed magic using the following commands:
+ I installed OpenLane using the following commands:
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt install -y build-essential python3 python3-venv python3-pip make git
