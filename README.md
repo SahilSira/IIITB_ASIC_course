@@ -155,8 +155,6 @@ sudo reboot
 
 docker run hello-world
 
- ```
-
 Below is the screenshot showing sucessful launch:
  ![OpenLane](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/e35808de-44e9-41c5-86d2-6e29f90b6623)
 
