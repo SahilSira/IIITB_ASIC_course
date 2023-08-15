@@ -294,7 +294,7 @@ Below are the commands to perform above synthesis.
 </details> 
 
 
-# Day-2-Timing libs, hierarchical, flat synthesis, efficient flop coding styles
+# Day-2
 <details>
 <summary>Introduction to timing .libs</summary>
- </details> 
+</details> 
