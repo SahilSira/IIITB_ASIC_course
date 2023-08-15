@@ -356,48 +356,140 @@ abc -liberty ~/Documents/ASICs/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib/sky1
 show multiple_modules
 ```
 **Reading and Synthesis of the said module**
-![vsd day_2 multiple module yosys](https://github.com/simarthethi/iiitb-asic/assets/140998783/f689253a-3682-4080-b4aa-06ac8d1436c7)
-![vsd day_2 reading verilog file](https://github.com/simarthethi/iiitb-asic/assets/140998783/af199fa9-8b89-413c-8619-191c19e687b1)
-![vsd day_2 generate netlist m_m](https://github.com/simarthethi/iiitb-asic/assets/140998783/ce6f9abf-f5e4-493f-ad6d-503905bd9300)
 
 - we hit show and expect to attain a similar schematic we had drew
-  ![vsd day_2 show graphical rep of m_m](https://github.com/simarthethi/iiitb-asic/assets/140998783/31a1f607-589b-44f1-b463-b5b793512e67)
+![multiple_modules](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/16ded881-6bc8-4fff-95fd-5f7a1ea5200a)
 
 
 - We get the image of the top module.
 - We don't get to see the and and or gates. We see the modules u1 and u2, which are the instances of the gates.
 - **This type of design is called an heirarchial design.**
-- We generate the netlist file for the design.
-```bash
-write_verilog -noattr multiple_modules_hier.v
-!gvim multiple_modules_hier.v  
-```
-![gvim of m_ hiererchial](https://github.com/simarthethi/iiitb-asic/assets/140998783/017232f1-274d-4a29-b288-aafd55ab7a3c)
-![vsd day_2 gvim m_m hiererchial pt2](https://github.com/simarthethi/iiitb-asic/assets/140998783/aff0388c-a5d1-4d54-a903-243277e659fc)
+- 
+The synthesizer considers the module hierarcy and does the mapping accordting to instantiation. Here is the hierarchical netlist code for the  multiple_modules:
 
-- In the netlist generated, it is observed that the hierarchy is maintained. The top module has instances of sub moduke 1 and 2, and the two modules are seperately defined implementing the and and or gates.
-- It is to be more, since this is CMOS technology, we implement the gates using a nand gate with inverted inputs for or gate and nor gate with inverted inputs for and gate.
+	module multiple_modules(a, b, c, y);
+		  input a;
+ 		 input b;
+ 		 input c;
+		  wire net1;
+ 		 output y;
+ 	  sub_module1 u1 (.a(a),.b(b),.y(net1) );
+	  sub_module2 u2 (.a(net1),.b(c),.y(y));
+	endmodule
+	
+	module sub_module1(a, b, y);
+ 	 wire _0_;
+ 	 wire _1_;
+ 	 wire _2_;
+ 	 input a;
+ 	 input b;
+ 	 output y;
+ 	 sky130_fd_sc_hd__and2_0 _3_ (.A(_1_),.B(_0_),.X(_2_));
+ 	 assign _1_ = b;
+ 	 assign _0_ = a;
+ 	 assign y = _2_;
+	endmodule
 
-Now we will look into flat design techcnique.
-```bash
-write_verilog -noattr multiple_modules_flat.v
-!gvim multiple_modules_flat.v
-```
-![vsd day_2 gvim m_m flattop synthesis](https://github.com/simarthethi/iiitb-asic/assets/140998783/4f3fb545-0eb5-4a0b-ac0d-a9d595935eaf)
-![flattop synthesis pt2](https://github.com/simarthethi/iiitb-asic/assets/140998783/7700a0f5-c504-4388-94b8-9f621a23028a)
+	module sub_module2(a, b, y);
+  	wire _0_;
+ 	 wire _1_;
+ 	 wire _2_;
+  	input a;
+  	input b;
+ 	 output y;
+ 	 sky130_fd_sc_hd__lpflow_inputiso1p_1 _3_ (.A(_1_),.SLEEP(_0_),.X(_2_) );
+ 	 assign _1_ = b;
+ 	 assign _0_ = a;
+ 	 assign y = _2_;
+	endmodule
 
-- In the new netlist, we don't see any instances of submodules such as u1 and u2.
-- We get direct instances of and and or gates under the flat design.
-- This type of design is known as flat desigin techniques.
+Flattened netlist:
 
-```bash
-flatten
-show multiple_modules
-```
-![vsd day_2 show multiple module flat](https://github.com/simarthethi/iiitb-asic/assets/140998783/75a2d5e4-4bce-4b08-adcb-d3e6037e3f76)
-We saw how to synthesis the top module, now we will look into synthesis of submodules.
-![vsd say_2 show sub_module 1](https://github.com/simarthethi/iiitb-asic/assets/140998783/e7a8c22e-b586-47e0-8e14-e18bf1977fa9)
-- We only see submodule 1, we don't get to see the multiple module or submodule 2.
+In flattened netlist, the hierarcies are flattend out and there is single module i.e, gates are instantiated directly instead of sub_modules. Here is the flattened netlist code for the  multiple_modules:
+
+	module multiple_modules(a, b, c, y);
+ 		 wire _0_;
+  		 wire _1_;
+ 		 wire _2_;
+ 		 wire _3_;
+		 wire _4_;
+		 wire _5_;
+ 		 input a;
+ 		 input b;
+ 		 input c;
+ 		 wire net1;
+ 		 wire \u1.a ;
+		 wire \u1.b ;
+		 wire \u1.y ;
+		 wire \u2.a ;
+		 wire \u2.b ;
+ 		 wire \u2.y ;
+  		output y;
+ 		 sky130_fd_sc_hd__and2_0 _6_ (
+  		  .A(_1_),
+  		 .B(_0_),
+   		 .X(_2_)
+  		);
+ 		 sky130_fd_sc_hd__lpflow_inputiso1p_1 _7_ (
+  		  .A(_4_),
+ 		  .SLEEP(_3_),
+  		  .X(_5_)
+ 		 );
+ 		 assign _4_ = \u2.b ;
+ 		 assign _3_ = \u2.a ;
+ 		 assign \u2.y  = _5_;
+ 		 assign \u2.a  = net1;
+		 assign \u2.b  = c;
+ 		 assign y = \u2.y ;
+		 assign _1_ = \u1.b ;
+		 assign _0_ = \u1.a ;
+		 assign \u1.y  = _2_;
+		 assign \u1.a  = a;
+		 assign \u1.b  = b;
+ 		 assign net1 = \u1.y ;
+		endmodule
+
+The commands to get the hierarchical and flattened netlists is shown below:
+
+**yosys> write_verilog -noattr multiple_modules_hier.v**
+
+8. Executing Verilog backend.
+Dumping module `\multiple_modules'.
+Dumping module `\sub_module1'.
+Dumping module `\sub_module2'.
+
+**yosys> !gvim multiple_modules_hier.v**
+
+11. Shell command: gvim multiple_modules_hier.v
+
+**yosys> flatten**
+
+12. Executing FLATTEN pass (flatten design).
+Deleting now unused module sub_module1.
+Deleting now unused module sub_module2.
+<suppressed ~2 debug messages>
+
+**yosys> write_verilog -noattr multiple_modules_flat.v**
+
+13. Executing Verilog backend.
+Dumping module `\multiple_modules'.
+
+**yosys> !gvim multiple_modules_flat.v**
+
+14. Shell command: gvim multiple_modules_flat.v
+
+This is the synthyesized circuit for a flattened netlist. Here u1 and u2 are flattened and directly or gates are realized.
+
+![flatten](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/44084c7b-2d36-41fc-9d4c-033adb546b0d)
+
+Here is the synthesized circuit of sub_module1. We are also generating module level synthesis so that if there is a top module with multiple and same sub_modules, we can synthesize it once and can use and connect the same netlist multiple times in the top module netlist.
+
+Another reason to generate module level synthesis and then stictch them together is to avoid errors in a top module if its massive and consists of several sub modules. Generating netlist for synthesis and then stiching it together in top level becomes easier and reduces risk of output mismatch.
+
+We control this synthesis using **synth -top <module_name>** command
+
+![sub_module1](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/08fc21ee-23c4-49df-9327-307001012edb)
+
 
 </details>
 <details>
