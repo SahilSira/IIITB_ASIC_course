@@ -193,9 +193,9 @@ Below is the screenshot showing sucessful launch:
 
 ### Lab examples using iverilog and GTKwave
 
-In this lab session we weere made failiar with the linux operating system as well as GTKwave along with codes in iverilog. We cloned sky130RTLDesign library from github using command: **git clone**. and worked on good_mux file.
+In this lab session we were made familiar with the linux operating system as well as GTKwave along with codes in iverilog. We cloned sky130RTLDesign library from github using command: **git clone**. and worked on good_mux file.
 
-<images>
+![Day1](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/d33f5d3e-2de2-4b0d-a0db-9af14ba79baf)
  
 Here is the code used in todays lab :<br />
 
@@ -234,7 +234,9 @@ Here is the code used in todays lab :<br />
 	endmodule
 
 </details>  
-
+![Day1_!](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/3686cea5-c028-4e23-8075-e18e984bed00)
+![Day1_gtk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/b59f444c-4007-49da-b36c-04eb0f3ac831)
+![Day1_gtkout](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/8bef8ca6-7847-43ae-a51e-bb46e22ee0ac)
 <details>
  <summary> Synthesis </summary>
 
