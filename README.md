@@ -267,7 +267,12 @@ Below are the commands to perform above synthesis.
 - netlist file- write_verilog
 ![yosys](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/da64a716-315d-4163-bbd4-fcf8d4510a51)
 
+![synth_netlist](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/36b0bdb8-4612-4d0e-878b-a35ca94edd73)
+
+![synth_nnetlist](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/af7441fe-c0ae-4722-91ea-bb7f94cd655e)
+
 **.lib :** It is a collection of logical modules like logic gates. It contains cells with different sppeds, no. of inputs etc. that can be used as required.
+![sunthsize](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/bf761a83-9614-4364-81b7-113a8e43d513)
 
 **Need for different speed of gates:**
   ![COMBI](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/57448e7a-781c-4b94-b18f-22b0b521b539)
