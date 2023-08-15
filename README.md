@@ -1,5 +1,7 @@
 # IIITB_ASIC_course
-[Day 0](#day-0)
+[Day 0 : Open Source Labs installation](#day-0)
+
+[Day 1 : Introduction to Verilog RTL design and Synthesis](#day-1)
 
 ## Day 0
 
@@ -160,3 +162,115 @@ Below is the screenshot showing sucessful launch:
 
 
 </details>
+
+
+# Day 1
+
+<details>
+  <summary>Simulation</summary>
+  <br />
+  **Simulator:** It is a tool for checking the design written in HDL. RTL design is checked for the the adherence to to spexifaction of required circuit.
+  **Design:** It is the verilog code to create the circuit that meets the required specificaations. It involves using HDL to specify behaviour and structure of the circuit.
+	**RTL design outline:**
+
+	module module_name (port_list);
+		//declarations;
+		//initializations;
+		//continuos concurrent assigments;
+		//procedural blocks;
+	endmodule
+  **Testbench:** It is used to apply stimulus to the design to check the working of the circuit and ensure that it's functionality meets the required specifications. 
+
+test bench image.
+
+**iverilog:** iverilog stands for Icarus Verilog. Icarus Verilog is an implementation of the Verilog hardware description language.
+**GTKwave:** GTKWave is a fully featured GTK+ based wave viewer for Unix, Win32, and Mac OSX which reads LXT, LXT2, VZT, FST, and GHW files as well as standard Verilog VCD/EVCD files and allows their viewing. 
+
+### Lab examples using iverilog and GTKwave
+
+In this lab session we weere made failiar with the linux operating system as well as GTKwave along with codes in iverilog. We cloned sky130RTLDesign library from github using command: **git clone**. and worked on good_mux file.
+
+<images>
+ 
+Here is the code used in todays lab :<br />
+
+	module good_mux (input i0 , input i1 , input sel , output reg y); 
+		always @ (*)
+		begin
+			if(sel)
+			y <= i1;
+			else 
+			y <= i0;
+		end
+	endmodule
+
+
+	`timescale 1ns / 1ps
+	module tb_good_mux;
+	// Inputs
+	reg i0,i1,sel;
+	// Outputs
+	wire y;
+      		// Instantiate the Unit Under Test (UUT), name based instantiation
+		good_mux uut (.sel(sel),.i0(i0),.i1(i1),.y(y));
+		//good_mux uut (sel,i0,i1,y);  //order based instantiation
+	initial begin
+		$dumpfile("tb_good_mux.vcd");
+		$dumpvars(0,tb_good_mux);
+		// Initialize Inputs
+		sel = 0;
+		i0 = 0;
+		i1 = 0;
+		#300 $finish;
+	end
+	always #75 sel = ~sel;
+	always #10 i0 = ~i0;
+	always #55 i1 = ~i1;
+	endmodule
+
+</details>  
+
+<details>
+ <summary> Synthesis </summary>
+
+ **Synthesizer:** It is a tool used to convert RTL design to gate level netlist. The Synthesis tool used in this lab is yosys.
+ **Netlist:** It is representation of RTL design in for of standard cells i.e. It is a properly implemented chip design in terms of logic gates.
+<image>
+ Synthesis takes place in following steps:
+- Converting RTL into simple logic gates.
+- Mapping those gates to actual technology-dependent logic gates available in the technology libraries.
+- Optimizing the mapped netlist keeping the constraints set by the designer intact.
+
+- **Verification of Synthesized design**: In order to make sure that there are no errors in the netlist, we need to verify the synthesized circuit. The netlist verification flow can be seen in the below image:
+  <image>
+
+  **Yosys**:It is a framework for RTL synthesis. It provides a basic set of synthesis algorithms for various application domains. Yosys is the core component of most our implementation and verification flows.
+
+Below are the commands to perform above synthesis.
+
+- RTL Design  - read_verilog
+- .lib        - read_liberty
+- netlist file- write_verilog
+
+  **.lib :** It is a collection of logical modules like logic gates. It contains cells with different sppeds, no. of inputs etc. that can be used as required.
+
+  **Need for different speed of gates:**
+   - We need gates fast enough so that the total delay of all the gates is smaller than the T(clk).
+   - 
+   - If we want to capture B in next clock cycle rather than the same, we need to make the delay larger than the whole time, so some cells need to work slowly
+ 
+  **Fast cell VS slow cells:**
+  - A load in digital logic is a capacitor
+- A faster charging or discharging means less delay
+- To increase the rate of charging or discharging we need to widen the transistors.
+- Wider transistor gives lower delay: but more is required and more power is required
+- Narrow transistors give out more delay  : we need less area and less power is consumed.
+
+  
+  
+
+   
+
+
+
+ 
