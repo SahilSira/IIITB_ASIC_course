@@ -170,8 +170,10 @@ Below is the screenshot showing sucessful launch:
   <summary>Simulation</summary>
   
   **Simulator:** It is a tool for checking the design written in HDL. RTL design is checked for the the adherence to to spexifaction of required circuit.
+ 
   **Design:** It is the verilog code to create the circuit that meets the required specificaations. It involves using HDL to specify behaviour and structure of the circuit.
-	**RTL design outline:**
+	
+ **RTL design outline:**
 
 	module module_name (port_list);
 		//declarations;
@@ -179,13 +181,16 @@ Below is the screenshot showing sucessful launch:
 		//continuos concurrent assigments;
 		//procedural blocks;
 	endmodule
+ 
   **Testbench:** It is used to apply stimulus to the design to check the working of the circuit and ensure that it's functionality meets the required specifications. 
 
 ![TB](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/85e33863-e4f5-4918-8dbc-81d89d5a774b)
 
 **iverilog:** iverilog stands for Icarus Verilog. Icarus Verilog is an implementation of the Verilog hardware description language.
+
 **GTKwave:** GTKWave is a fully featured GTK+ based wave viewer for Unix, Win32, and Mac OSX which reads LXT, LXT2, VZT, FST, and GHW files as well as standard Verilog VCD/EVCD files and allows their viewing. 
 ![gtkwave](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/0abe95fa-d578-4d02-bce4-196dc23e989b)
+
 ### Lab examples using iverilog and GTKwave
 
 In this lab session we weere made failiar with the linux operating system as well as GTKwave along with codes in iverilog. We cloned sky130RTLDesign library from github using command: **git clone**. and worked on good_mux file.
@@ -234,8 +239,10 @@ Here is the code used in todays lab :<br />
  <summary> Synthesis </summary>
 
  **Synthesizer:** It is a tool used to convert RTL design to gate level netlist. The Synthesis tool used in this lab is yosys.
+ 
  **Netlist:** It is representation of RTL design in for of standard cells i.e. It is a properly implemented chip design in terms of logic gates.
 ![netlist](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/3ab88731-8950-4a71-99ee-afcd24a65a91)
+
  Synthesis takes place in following steps:
 - Converting RTL into simple logic gates.
 - Mapping those gates to actual technology-dependent logic gates available in the technology libraries.
@@ -253,16 +260,17 @@ Below are the commands to perform above synthesis.
 - .lib        - read_liberty
 - netlist file- write_verilog
 ![yosys](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/da64a716-315d-4163-bbd4-fcf8d4510a51)
-  **.lib :** It is a collection of logical modules like logic gates. It contains cells with different sppeds, no. of inputs etc. that can be used as required.
 
-  **Need for different speed of gates:**
+**.lib :** It is a collection of logical modules like logic gates. It contains cells with different sppeds, no. of inputs etc. that can be used as required.
+
+**Need for different speed of gates:**
   ![COMBI](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/57448e7a-781c-4b94-b18f-22b0b521b539)
    - We need gates fast enough so that the total delay of all the gates is smaller than the T(clk).
      ![tclk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/babb72d3-f561-4782-97f5-cf591001b54c)
    - If we want to capture B in next clock cycle rather than the same, we need to make the delay larger than the whole time, so some cells need to work slowly
- 
-  **Fast cell VS slow cells:**
-  - A load in digital logic is a capacitor
+
+**Fast cell VS slow cells:**
+- A load in digital logic is a capacitor
 - A faster charging or discharging means less delay
 - To increase the rate of charging or discharging we need to widen the transistors.
 - Wider transistor gives lower delay: but more is required and more power is required
