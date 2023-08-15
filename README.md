@@ -499,19 +499,19 @@ code them efficiently. All the required files are presen in the folder verilog_f
 To understand the need of flops, we refer the example of a simple circuit with delays as 2ns for 
 and gate and 1ns for or gate.
  
-![Screenshot from 2023-08-16 01-14-56](https://github.com/simarthethi/iiitb-asic/assets/140998783/823b6384-2b96-4bf6-9f9e-29960f572b73)
+![4](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/65401c06-ec16-49f6-874e-1600abc9b717)
 
 
 - Considering the input goes from 0 to 1 for a and b and simultaneously, 1 to 0 for c.
 - Ideally for the transition from (001) to (110), the output should have been a constant at 1,
 but because of the delay, we get outout as 0 for a brief period of 2ns.
 - This is called a glitch.
-![Screenshot from 2023-08-16 01-17-36](https://github.com/simarthethi/iiitb-asic/assets/140998783/32a7f827-b33c-4083-9ae7-ed5ddd611cba)
+![5](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/4ad3c335-933a-49ad-8dbc-7fb64bf8bc1f)
 
 - More the number of combinational circuits, more number of glitches appear, giving a glitchy output.
 - To avoid this, we need an element to store the value. Comes the flops into picture.
 - We use a D flipflop. They are a storage element. They are placed between combinational circuits and changes value only at clock edge.
-![Screenshot from 2023-08-16 01-19-10](https://github.com/simarthethi/iiitb-asic/assets/140998783/6f21888e-78ba-4fb3-a203-feb739b160ac)
+![6](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/ab9145c0-096e-45c2-85ab-803bd5b645a6)
 
 - We need to initailise the flops, else the combinational circuits gives a garbage value. For this purpose we have reset and set pins. They can be asynchoronous and synchronous.
 
@@ -523,7 +523,7 @@ Types of flops
 - Under the case of synchronous reset, the output is pulled to 0 at the next clock cycle. The design and timing diagram along the verilog code is shown under the column 2 of the image below.
 - Sync reset can be understodd as the input is pulled to 0, thus output becomes 0 for next clock cycle.
 
-![Screenshot from 2023-08-16 01-22-20](https://github.com/simarthethi/iiitb-asic/assets/140998783/770b73ce-325c-42c9-9e86-35995680fd99)
+![7](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/18024a99-5be5-4403-88e4-50bcabfbe526)
 
 Now, we go through simuations of async reset, async set and sync async reset and observe the waveforms using gtkwave to have a better understand.
 
@@ -540,13 +540,11 @@ end
 endmodule
 ```
 On execution of iverilog and gtkwave we get
-![vsd day_2 dff asyncres](https://github.com/simarthethi/iiitb-asic/assets/140998783/63ca8084-3fb8-4bc6-a631-690fd92672d0)
-![vsd day_2 gtkwave dff asyncres](https://github.com/simarthethi/iiitb-asic/assets/140998783/00e0eca2-13f9-41eb-9ed1-7604185aa593)
+![reset_async](https://github.com/SahilSira/IIITB_ASIC_course/
 - We can observe that the output q goes to 0 when the reset is encountered.
 - Now we synthesis the design using yosys.
 
-![vsd day_2yosys dff asyncres](https://github.com/simarthethi/iiitb-asic/assets/140998783/e8c03f69-9d14-4824-bf0a-535504d8bec8)
-![vsd day_2 reading dff ayncres](https://github.com/simarthethi/iiitb-asic/assets/140998783/dd54d587-e4e1-4128-8a79-68370e35b5e2)
+![async_res](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/2e007031-48fd-459e-9f45-9529a4421380)
 
 **RTL design of dff_async_set**
 ```bash
@@ -561,11 +559,10 @@ end
 endmodule
 ```
 - upon execution on terminal using iverilog and gtkwave
-![vsd day_2 dff async set](https://github.com/simarthethi/iiitb-asic/assets/140998783/fc3ff189-8c67-478a-9ce3-fe12772e468c)
-![gtkwave dff async set](https://github.com/simarthethi/iiitb-asic/assets/140998783/2f11ebf4-4daa-4b12-b53f-dd841782cf6d)
+![set_async](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/21f6a434-c8dd-4d35-a753-857a7320bd67)
 
 - We can observe that the output q goes to 1 as soon as we encounter the set irrespective of that clock. -Now we synthesis the design using yosys.
-![vsd day_2 graphical dff  asynset](https://github.com/simarthethi/iiitb-asic/assets/140998783/d64f3b85-e656-4ac1-b58b-a48b000f0274)
+![async_set](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/d644d081-baa0-42a8-b3d0-a092a13164fb)
 
 **RTL code for dff_syncres**
 ```bash
@@ -580,11 +577,10 @@ end
 endmodule
 ```
 - Upon executing iverilog and gtkwave
-![vsd day_2 syncres](https://github.com/simarthethi/iiitb-asic/assets/140998783/988d2164-d386-4cbe-9de9-bf4178a15979)
-![gtkwave dff syncres](https://github.com/simarthethi/iiitb-asic/assets/140998783/541ecbfa-0abd-4983-bee4-27ba81108523)
+![sync_reset](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/da0ac16c-b5e6-44a9-8666-4fd78ab1bc75)
 - It is observed that the output q is set to 0 at the next clock pulse when the reset is encountered, thus it is the case of sync reset.
 - Now we synthesis the design using yosys.
-![vsd day_2 graphical repp dff syncres](https://github.com/simarthethi/iiitb-asic/assets/140998783/b473d2c0-9789-472f-bd15-7e33485c943f)
+![sync_res](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/29d29ab7-70ba-4c64-bce1-1becce5136e2)
 
 </details>
 <details>
