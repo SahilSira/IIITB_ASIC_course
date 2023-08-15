@@ -338,11 +338,12 @@ Under this section, we go over what is heirchial synthesis and flat synthesis. F
 
 
 ```bash
-simar-thethi@simar-thethi-Inspiron-3542:~/vsd/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files$ multiple_modules.v
+
 ```
 ![multiple_modules_net](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/475233e3-c6d5-4539-80d1-3c767c920f0c)
 
 Gate level diagram
+
 ![3](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/30f490f1-01f5-40b2-a444-09385a1522d5)
 
 We go to the directory where we find the model in verilog files
@@ -506,6 +507,7 @@ and gate and 1ns for or gate.
 - Ideally for the transition from (001) to (110), the output should have been a constant at 1,
 but because of the delay, we get outout as 0 for a brief period of 2ns.
 - This is called a glitch.
+  
 ![5](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/4ad3c335-933a-49ad-8dbc-7fb64bf8bc1f)
 
 - More the number of combinational circuits, more number of glitches appear, giving a glitchy output.
