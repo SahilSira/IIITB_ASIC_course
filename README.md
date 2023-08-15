@@ -3,6 +3,8 @@
 
 [Day 1 : Introduction to Verilog RTL design and Synthesis](#day-1)
 
+[Day-2-Timing libs,hierarchical,flat synthesis,efficient flop coding styles](#Day-2-Timing-libs-hierarchical-flat-synthesis-efficient-flop-coding-styles)
+
 ## Day 0
 
 <details>
@@ -290,10 +292,7 @@ Below are the commands to perform above synthesis.
 - Narrow transistors give out more delay  : we need less area and less power is consumed.
 
   
-  
-
-   
-
-
-
+# Day-2-Timing libs, hierarchical, flat synthesis, efficient flop coding styles
+<details>
+<summary>Introduction to timing .libs</summary>
  
