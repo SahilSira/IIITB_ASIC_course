@@ -275,8 +275,10 @@ Below are the commands to perform above synthesis.
 ![sunthsize](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/bf761a83-9614-4364-81b7-113a8e43d513)
 
 **Need for different speed of gates:**
+  
   ![COMBI](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/57448e7a-781c-4b94-b18f-22b0b521b539)
    - We need gates fast enough so that the total delay of all the gates is smaller than the T(clk).
+   
      ![tclk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/babb72d3-f561-4782-97f5-cf591001b54c)
    - If we want to capture B in next clock cycle rather than the same, we need to make the delay larger than the whole time, so some cells need to work slowly
 
