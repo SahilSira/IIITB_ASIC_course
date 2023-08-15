@@ -540,6 +540,7 @@ end
 endmodule
 ```
 On execution of iverilog and gtkwave we get
+
 ![reset_async](https://github.com/SahilSira/IIITB_ASIC_course/
 - We can observe that the output q goes to 0 when the reset is encountered.
 - Now we synthesis the design using yosys.
@@ -559,6 +560,7 @@ end
 endmodule
 ```
 - upon execution on terminal using iverilog and gtkwave
+  
 ![set_async](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/21f6a434-c8dd-4d35-a753-857a7320bd67)
 
 - We can observe that the output q goes to 1 as soon as we encounter the set irrespective of that clock. -Now we synthesis the design using yosys.
@@ -596,12 +598,12 @@ module mul2 (input [2:0] a, output [3:0] y);
 endmodule
 ```
 - The block diagram and the truth table for the executed logic is shown under.
-![Screenshot from 2023-08-16 02-08-26](https://github.com/simarthethi/iiitb-asic/assets/140998783/d9b3bdff-8374-463d-913c-88db7e39d59b)
+![8](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/01e3ceb0-7407-49de-84cf-34c759ed0f9e)
 
 - From these, we are able to infer that the logic requires the input to be multiplied with 2, and upon checking the output it is the input with 1'b0 padding.
 - Thus the design for the logic needs no hardware to be mapped.
 - We will confirm this using yosys.
-![Screenshot from 2023-08-16 02-11-02](https://github.com/simarthethi/iiitb-asic/assets/140998783/c746b58e-d304-4586-a3a5-6b4b272ac42f)
+![mul2](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/c099c276-c82a-4c88-a800-bb16890a746f)
 
 - From the yosys synthesis, we observe the number of cells in design is 0 and there is no hardware to be mapped. These have been highlighted in the picture above.
 - The schematic attained shows a similar result.
@@ -617,12 +619,12 @@ module mult8 (input [2:0] a , output [5:0] y);
 endmodule
 ```
 - explanation
-![Screenshot from 2023-08-16 02-13-28](https://github.com/simarthethi/iiitb-asic/assets/140998783/df14eb46-1a54-4e03-a098-54ce543cf23e)
+![9](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/6d99ea98-da02-45d0-b0ae-70a2d6fe163e)
 
 - Multiplcation with 9 can be seen as multiplication with 8 and plus 1.
 - We know multiplication with 8 is equal to 3'b000 padding, and adding the same 3 bit number to the padded number comes of as concatanation of {a,a}.
 - Thus there are no standard cell required for the design. We verify this using yosys.
-![Screenshot from 2023-08-16 02-15-45](https://github.com/simarthethi/iiitb-asic/assets/140998783/20c612e7-3e59-4b14-9931-2d1810ede082)
+
 
 - We see that there are no standard cells required.
 - We see the concatanation operation done in the netlist.
