@@ -543,7 +543,7 @@ endmodule
 ```
 On execution of iverilog and gtkwave we get
 
-![reset_async](https://github.com/SahilSira/IIITB_ASIC_course/
+![reset_async](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/20880ef4-5e33-4fc1-a9f5-dadd7dfcbc6e)
 - We can observe that the output q goes to 0 when the reset is encountered.
 - Now we synthesis the design using yosys.
 
