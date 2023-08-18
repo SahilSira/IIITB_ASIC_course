@@ -1,9 +1,11 @@
 # IIITB_ASIC_course
-[Day 0 : Open Source Labs installation](#day-0)
+- [Day-0-Installation](#day-0-Installation)
 
-[Day 1 : Introduction to Verilog RTL design and Synthesis](#day-1)
+- [Day-1-Introduction to Verilog RTL design and Synthesis](#Day-1--Introduction-to-Verilog-RTL-design-and-Synthesis)
 
-[Day-2-Timing libs,hierarchical,flat synthesis,efficient flop coding styles](#Day-2-Timing-libs-hierarchical-flat-synthesis-efficient-flop-coding-styles)
+- [Day-2-Timing libs,hierarchical,flat synthesis,efficient flop coding styles](#Day-2-Timing-libs-hierarchical-flat-synthesis-efficient-flop-coding-styles)
+
+- [Day-3-Combinational and sequential optmizations](#day-3-Combinational-and-sequential-optmizations)
 
 ## Day 0
 
