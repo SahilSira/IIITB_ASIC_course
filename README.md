@@ -634,3 +634,386 @@ endmodule
 - We see the concatanation operation done in the netlist.
 </details>
 
+
+
+
+## Day 3
+<details>
+<summary> Summary </summary>
+I have synthesized designs with optimizations. Combinational logic optimizations include 1-) 
+constant propagation (when the combination is just propagating a constant) and 2-) boolean logic 
+optimization (when boolean rules are used to simplify the expression). Sequential logic 
+optimizations include 1-) sequential constant propagation (when constant is propagated with clock 
+involved), 2-) state optimization (when unused states are optimized), 3-) retiming (when logic is 
+split to decrease timing of the different logic portions and increase frequency), and 4-) 
+sequential logic cloning (when physical aware synthesis is done to optimize the floop plan)
+</details>
+<details>
+<summary> Introduction to Optimizations </summary>
+Optimising the combinational logic circuit is squeezing the logic to get the most optimized digital design so that the circuit finally is area and power efficient. This is achieved by the synthesis tool using various techniques and gives us the most optimized circuit.
+
+**Techniques for optimization for combinational logic**:
+
+- Constant propagation which is Direct optimizxation technique
+- Boolean logic optimization using K-map or Quine McKluskey
+
+Here is an example for **Constant Propagation**
+![1](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/108502bc-a004-47fe-a54c-105d085f9ce7)
+In the above example, if we considor the trasnsistor level circuit of output Y, it has 6 MOS trasistors and when it comes to invertor, only 2 transistors will be sufficient. This is achieved by making A as contstant and propagating the same to output.
+**Techniquies for Sequentional logic otimizations**
+Below are the various techniques used for sequential logic optimisations:
+- Basic
+   Sequential contant propagation
+- Advanced
+   State optimisation
+   Retiming
+   Sequential Logic Cloning (Floor Plan Aware Synthesis)
+
+-  The input of D ff is grounded, ir d=0, and the reset parameter is given. Here even if the
+  reset is given or not the output output of the flop is constant at 0, hence the overall outcome
+  is constant.
+
+![2](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/370d4b89-5728-4518-a2a7-a5b3a73741ae)
+- Now taking the same circuit, but instead of reset, we give set. Now when the set is 1, the flop
+output follows set. As soon as set is removed, the output goes to 0 at the next positive clock
+edge. Thus now we can't remove the flop from design, Thus we retain the flop.
+
+![3](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/7c729093-7648-4a04-b5db-6ff3f2c9eb56)
+**Advanced Methods for Sequential logic Optimisation**
+
+- State optimization in ASIC design is about finding the best trade-offs among performance, power
+efficiency, area utilization, and other design objectives to create an effective and efficient
+custom integrated circuit for a particular application.
+- Re-timing is the technique used to optimize the timing performance of a digital circuit by
+moving registers (flip-flops) to different locations within the circuit without changing its
+functionality. The primary goal of retiming is to improve the critical path delay, which is the
+longest path through the logic circuit that determines the maximum operating frequency.
+- Sequential logic cloning or flip-flop cloning or state machine cloning is the technique used to
+replicate or duplicate certain portions of sequential logic circuits. This technique is employed
+to improve performance, reduce critical path delays, or optimize power consumption in a design
+without altering its functional behavior.
+
+
+
+</details>
+<details>
+<summary> Combinational logic optimizations </summary>
+
+Let's consider an example concurrent statement assign **y=a?(b?c:(c?a:0)):(!c)**
+
+The above expression is using a ternary operator which realizes a series of multiplexers, however, when we write the boolean expression at outputs of each mux and simplify them further using boolean reduction techniques, the outout y turns out be just **~(a^c)**
+
+Command to optimize the circuit by yosys is
+```bash
+yosys> opt_clean -purge
+```
+opt_clean remove unused cells and wires. The -purge switch removes internal nets if they have a 
+public name. This command identifies wires and cells that are unused and removes them. This 
+command can be used to clean up after the commands that do the actual work.
+
+
+
+In case of multiple models, it is important to flatten the design then followup with 
+optimization.
+
+**Lab 1-opt_check.v**
+**RTL code**
+```bash
+module opt_check (input a , input b , output y);
+	assign y = a?b:0;
+endmodule
+```
+- after synthesis on yosys
+![opt_check](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/f30c2c9b-dc79-4dc2-9544-24cef7269776)
+
+**Lab_2 opt_check2.v**
+**RTL code**
+```bash
+module opt_check2 (input a , input b , output y);
+	assign y = a?1:b;
+endmodule
+```
+- Hardware after synthesis on yosys
+![opt_check_2](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/f2d32f8b-0eb2-4dd7-a6b2-f452fbfa2ba9)
+
+**Lab_3 opt_check3.v**
+**RTL code**
+```bash
+module opt_check3 (input a , input b, input c , output y);
+	assign y = a?(c?b:0):0;
+endmodule
+```
+- hardware after synthesis on yosys
+
+![opt_check_3](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/096040ba-caf5-4609-b28b-78bc0df9da47)
+
+**Lab_4 opt_check4.v**
+**RTL code**
+```bash
+module opt_check4 (input a , input b , input c , output y);
+ assign y = a?(b?(a & c ):c):(!c);
+ endmodule
+```
+- Hardware  after synthesis on yosys
+
+![opt_check_4](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/43a1707d-0ee9-4ceb-8843-18932d676c90)
+**Lab_5 multiple_module_opt.v
+**RTL code**
+```bash
+module sub_module1(input a , input b , output y);
+ assign y = a & b;
+endmodule
+
+
+module sub_module2(input a , input b , output y);
+ assign y = a^b;
+endmodule
+
+
+module multiple_module_opt(input a , input b , input c , input d , output y);
+wire n1,n2,n3;
+
+sub_module1 U1 (.a(a) , .b(1'b1) , .y(n1));
+sub_module2 U2 (.a(n1), .b(1'b0) , .y(n2));
+sub_module2 U3 (.a(b), .b(d) , .y(n3));
+
+assign y = c | (b & n1); 
+
+
+endmodule
+```
+- Hardware after synthesis on yosys
+- 
+![multiple_module_opt_](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/1727b12b-74a4-45eb-8c18-1593513af53b)
+- Hardware after clean :
+- ![multile_module](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/33c30475-3cc1-4888-8b47-392ede75b4a8)
+- 
+
+**Lab_6 multiple_modules_opt2.v**
+**RTL code**
+```bash
+ module sub_module(input a , input b , output y);
+ assign y = a & b;
+endmodule
+
+
+
+module multiple_module_opt2(input a , input b , input c , input d , output y);
+wire n1,n2,n3;
+
+sub_module U1 (.a(a) , .b(1'b0) , .y(n1));
+sub_module U2 (.a(b), .b(c) , .y(n2));
+sub_module U3 (.a(n2), .b(d) , .y(n3));
+sub_module U4 (.a(n3), .b(n1) , .y(y));
+
+
+endmodule
+```
+- Hardware after yosys synthesis
+![multiple_module_opt_2](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/c97be23c-1c8a-474b-8ef1-464e117b409e)
+
+- Harware after clean
+-![multile_module_2](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/506e9f0f-c8ca-4382-9665-db49c2d1b15d)
+ 
+</details>
+
+<details>
+<summary> Sequentional Logic Optimizations </summary>
+
+**Lab_1 dff_const1.v**
+**RTL code**
+```bash
+module dff_const1(input clk, input reset, output reg q);
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b0;
+	else
+		q <= 1'b1;
+end
+
+endmodule
+```
+- Simulation on iverilog and gtkwave
+- 
+![dff_const1_gtk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/169586bf-4382-4d5e-9578-c765acbec8a0)
+
+- optimization using yosys
+
+![dff_const1](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/94718ab3-b6fb-4bdb-a0ab-74a8394cea25)
+
+
+**Lab_2 dff_const2.v**
+**RTL code**
+```bash
+module dff_const2(input clk, input reset, output reg q);
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b1;
+	else
+		q <= 1'b1;
+end
+
+endmodule
+```
+- Simulation using iverilog and yosys
+
+![dff_const2_gtk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/65fb4d37-79cc-4db0-b7d4-9ee9e7bd5c40)
+
+- optimization using yosys
+
+![dff_const2](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/6739d434-9cae-47ec-9d56-6e087e971021)
+
+
+**Lab_3 dff_const3.v**
+**RTL code**
+```bash
+module dff_const2(input clk, input reset, output reg q);
+module dff_const3(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b1;
+		q1 <= 1'b0;
+	end
+	else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+
+endmodule
+```
+-simaulation using iverilog and gtkwave
+
+![dff_const3_gtk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/7acdd5a0-7ce5-4e9c-8f79-cb605c603105)
+
+-optimization using yosys
+
+![dff_const3](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/05db8912-0840-42f9-a4d4-3006a4804bd2)
+
+
+**Lab_4 dff_const4.v**
+**RTL code**
+```bash
+module dff_const4(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b1;
+		q1 <= 1'b1;
+	end
+	else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+
+endmodule
+```
+-Simulation using iverilog and gtkwave
+
+![dff_const4_gtk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/e28eb6cb-bd20-4460-bfe9-db289273de7f)
+
+-optimization using yosys
+
+![dff_const4](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/d3cb3001-1265-4a36-8d1a-bb34186cbaec)
+
+
+**Lab_5 dff_const5.v**
+**RTL code**
+```bash
+
+module dff_const5(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b0;
+		q1 <= 1'b0;
+	end
+	else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+
+endmodule
+```
+-simulation using iverilog and gtkwave
+
+![dff_const5_gtk](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/6eb1877e-c123-49df-83aa-0164cbc2646b)
+
+
+-optimization using yosys
+
+![dff_const5](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/253a8968-4cbb-4f6e-b909-f1d6d8a4ebd0)
+
+</details>
+
+<details>
+<summary> Sequential optimizations for unused outputs </summary>
+Under this section, we look into how yosys synthesizer optimises the design in case of unused 
+bits in the output. For this we have taken a 3 bit counter. In case 1, only the LSB is taken as 
+final output, thus the first two are left unused. In case two, we take the entire 3 bits as 
+output.
+
+ 
+![4](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/42b996a2-1902-4adc-8f49-c6ec7810af12)
+
+**Lab_1 using count[0]**
+**RTL code**
+```bash
+module counter_opt (input clk , input reset , output q);
+reg [2:0] count;
+assign q = count[0];
+
+always @(posedge clk ,posedge reset)
+begin
+	if(reset)
+		count <= 3'b000;
+	else
+		count <= count + 1;
+end
+
+endmodule
+```
+-synthesis using yosys
+
+![counter](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/0b587918-b54e-4380-861c-f307300b492b)
+
+**Lab_2 using all three bits count[2] and count[1] and count[0]
+**RTL code**
+```bash
+module counter_opt (input clk , input reset , output q);
+reg [2:0] count;
+assign q = count[2:0] == 3'b100;
+
+always @(posedge clk ,posedge reset)
+begin
+	if(reset)
+		count <= 3'b000;
+	else
+		count <= count + 1;
+end
+```
+- synthesis using yosys
+
+![counter2](https://github.com/SahilSira/IIITB_ASIC_course/assets/140998855/029ed754-67cd-4e53-bae4-564423de681a)
+
+- In the yosys generation, we see the design has encorporated 3 dff for the 3 bit counter.
+- It is evident that the yosys synthesizer optimizes for the unsed bits in the output. This so important as illustrated because it saves a ton of space, and speed, and improves efficiency of the final design.
+ </details> 
+
