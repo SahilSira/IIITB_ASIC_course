@@ -1,5 +1,5 @@
 # IIITB_ASIC_course
-- [Day-0-Installation](#Day 0)
+- [Day-0-Installation](#day-0)
 
 - [Day-1-Introduction to Verilog RTL design and Synthesis](#Day-1)
 
