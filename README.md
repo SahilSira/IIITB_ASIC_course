@@ -7,7 +7,7 @@
 
 - [Day-3-Combinational and sequential optmizations](#day-3)
 
-- [Day-4-GLS, blocking vs non-blocking and Synthesis-Simulation mismatch](#5-day4)
+- [Day-4-GLS, blocking vs non-blocking and Synthesis-Simulation mismatch](#day-4)
 
 - [Day-5-if, case, for loop and for generate](#day-5)
 
