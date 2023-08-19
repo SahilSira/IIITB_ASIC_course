@@ -1,11 +1,15 @@
 # IIITB_ASIC_course
-- [Day-0-Installation](#day-0-Installation)
+- [Day-0-Installation](#Day 0)
 
-- [Day-1-Introduction to Verilog RTL design and Synthesis](#Day-1--Introduction-to-Verilog-RTL-design-and-Synthesis)
+- [Day-1-Introduction to Verilog RTL design and Synthesis](#Day-1)
 
-- [Day-2-Timing libs,hierarchical,flat synthesis,efficient flop coding styles](#Day-2-Timing-libs-hierarchical-flat-synthesis-efficient-flop-coding-styles)
+- [Day-2-Timing libs,hierarchical,flat synthesis,efficient flop coding styles](#day-2)
 
-- [Day-3-Combinational and sequential optmizations](#day-3-Combinational-and-sequential-optmizations)
+- [Day-3-Combinational and sequential optmizations](#day-3)
+
+- [Day-4-GLS, blocking vs non-blocking and Synthesis-Simulation mismatch](#5-day4)
+
+- [Day-5-if, case, for loop and for generate](#day-5)
 
 ## Day 0
 
